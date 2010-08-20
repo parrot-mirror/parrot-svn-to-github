@@ -4,6 +4,7 @@ run () {
     ( set -x; "$@" )
 }
 
+run svk sync /parrot/parrot
 run git svn fetch
 
 # fix tags
@@ -15,7 +16,7 @@ git branch -r | grep tags/ | while read t; do
 done
 
 # fix branches
-git branch -r | grep -v github/ | grep -v '[[:space:]]*master$' | while read b; do
+git branch -r | grep -v github/ | grep -v '[[:space:]]*trunk$' | while read b; do
     if ! git branch | grep -qs "^[[:space:]]*$b$"; then
         run git branch -t $b remotes/$b
         run git checkout $b
